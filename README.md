@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Prep
 
-## Getting Started
-
-First, run the development server:
+Working solutions, snippets and notes for frontend interviews, published as a site.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev    # http://localhost:3000/resources
+npm test       # snippet and challenge tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Adding content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Nothing needs registering except a challenge's live demo. A leading `# Title` line names the page; without one the file or folder name is used.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To tag an entry, put this at the very top of its `.md` file (the `README.md` for snippets and challenges). Tags show on the home page and each one gets a `/tags/<tag>` page.
 
-## Learn More
+```md
+---
+tags: HTML, Accessibility
+---
+```
 
-To learn more about Next.js, take a look at the following resources:
+| Type | Where | What to write |
+| --- | --- | --- |
+| Note | `content/notes/<topic>/<slug>.md` | Bullets and code blocks. |
+| Questions | `content/questions/<topic>.md` | One `## question` heading per card, answer underneath. |
+| Snippet | `snippets/<slug>/` | Source file(s), a `*.test.ts`, optional `README.md` with key points. |
+| Challenge | `challenges/<slug>/` | `README.md` (prompt and talking points), `solution/`, optional `starter/` to re-attempt from. Add the demo component to `challenges/registry.ts`. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `content/`, `snippets/`, `challenges/`: the material itself.
+- `lib/content.ts`: reads those folders.
+- `app/`: the site that renders them.

@@ -1,0 +1,38 @@
+.root {
+  position: relative;
+  max-width: 320px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.list {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.list li:hover,
+.active {
+  background: var(--surface);
+}

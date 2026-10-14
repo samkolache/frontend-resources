@@ -1,0 +1,84 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background-color: #eceeee;
+}
+
+.card {
+  width: 100%;
+  max-width: 340px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 288px;
+  object-fit: cover;
+  display: block;
+}
+
+.cardBody {
+  padding: 24px 16px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 2px 6px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+}
+
+.caption {
+  color: #525252;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.ctaLink {
+  color: #4338ca;
+  font-weight: 500;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  text-decoration: none;
+}
+
+
+.ctaLink:hover,
+.ctaLink:focus-visible {
+  color: #3730a3;
+}
+
+.ctaLink:focus-visible {
+  outline: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px #444ce7,
+    0 0 0 4px rgba(68, 76, 231, 0.12);
+}
