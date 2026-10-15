@@ -41,7 +41,7 @@ async function CurrentYear() {
 export const metadata: Metadata = {
   title: "Frontend Prep · Sam Kotecha",
   description:
-    "Working solutions, snippets and notes for frontend interviews.",
+    "Working solutions, snippets, notes, and experiments.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

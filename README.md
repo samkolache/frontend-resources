@@ -25,6 +25,7 @@ tags: HTML, Accessibility
 | Questions | `content/questions/<topic>.md` | One `## question` heading per card, answer underneath. |
 | Snippet | `snippets/<slug>/` | Source file(s), a `*.test.ts`, optional `README.md` with key points. |
 | Challenge | `challenges/<slug>/` | `README.md` (prompt and talking points), `solution/`, optional `starter/` to re-attempt from. Add the demo component to `challenges/registry.ts`. |
+| Challenge (plain HTML/JS) | `challenges/<slug>/` | Same, but `solution/` holds `index.html` plus its `.css`/`.js` files. The page runs `index.html` in an iframe; nothing to register. Files must sit directly in `solution/`. |
 
 ## Layout
 

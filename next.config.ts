@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
+import { BASE_PATH } from "./lib/site";
 
 const nextConfig: NextConfig = {
-  // Served at samkotecha.com/resources via a rewrite in the portfolio's vercel.json.
-  basePath: "/resources",
+  basePath: BASE_PATH,
   experimental: {
     agentFeedback: true,
   },

@@ -82,6 +82,7 @@ A function plus the variables in scope where it was created.
   - `solution/<Name>.tsx` and `solution/<Name>.module.css`: the component, default-exported, PascalCase file name. Add `"use client"` only if it has state, effects or event handlers.
   - `assets/`: images and other binary files. Never put them in `solution/`; the site prints every file in `solution/` as source code.
 - Register the live demo in `challenges/registry.ts`: import the component and add `"<slug>": Name` to `demos`.
+- **Plain HTML/CSS/JS instead of React**, when the user asks for it: put `index.html`, `style.css` and `script.js` (loaded with `<script type="module">`) directly in `solution/`, with no subfolders. The challenge page runs `index.html` in an iframe and serves every file in `solution/` as-is, so relative links between them work. Don't add a `registry.ts` line for these.
 - **The user builds challenges themselves.** By default create a minimal placeholder component that renders and compiles, and stop there. Write the full solution only when they ask for it.
 - When moving in code the user wrote elsewhere, port it as it is and keep any `REVIEW` comments on the lines they refer to. Do not fix open review items; those are the user's practice.
 - A component that needs its own font loads it with `next/font` inside the component, so the rest of the site is unaffected.

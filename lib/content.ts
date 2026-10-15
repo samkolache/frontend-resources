@@ -14,7 +14,12 @@ export type Entry = {
   description: string;
   tags: string[];
 };
-export type CodeEntry = Entry & { readme: string; files: SourceFile[] };
+export type CodeEntry = Entry & {
+  readme: string;
+  files: SourceFile[];
+  /* Plain HTML/CSS/JS challenge: solution/index.html is shown in an iframe. */
+  vanilla: boolean;
+};
 export type EntryKind = "Challenge" | "Snippet" | "Note" | "Questions";
 export type ResolvedTag = { name: string; slug: string; color: string };
 export type TaggedEntry = {
@@ -94,8 +99,25 @@ function parseDoc(markdown: string | null, slug: string) {
 function fileRank(name: string) {
   if (name.includes(".test.")) return 3;
   if (name.endsWith(".css")) return 2;
-  return name.endsWith(".tsx") ? 0 : 1;
+  return name.endsWith(".tsx") || name.endsWith(".html") ? 0 : 1;
 }
+
+// Shown as source tabs; anything else (images, fonts) is skipped.
+const TEXT_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".mjs", ".css", ".html", ".json", ".md"];
+
+const CONTENT_TYPES: Record<string, string> = {
+  ".html": "text/html; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".mjs": "text/javascript; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+};
 
 function sourceFiles(dir: string): SourceFile[] {
   if (!fs.existsSync(dir)) return [];
@@ -103,6 +125,7 @@ function sourceFiles(dir: string): SourceFile[] {
     .readdirSync(dir, { withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name !== "README.md")
     .map((entry) => entry.name)
+    .filter((name) => TEXT_EXTENSIONS.includes(path.extname(name)))
     // Components first, then other code, styles, tests.
     .sort((a, b) => fileRank(a) - fileRank(b) || a.localeCompare(b))
     .map((name) => ({
@@ -200,6 +223,7 @@ function codeEntry(root: string, slug: string, sourceDir: string) {
     tags: doc.tags,
     readme: doc.body,
     files: sourceFiles(path.join(dir, sourceDir)),
+    vanilla: fs.existsSync(path.join(dir, sourceDir, "index.html")),
   };
 }
 
@@ -219,6 +243,33 @@ export function getChallenges(): Entry[] {
 
 export function getChallenge(slug: string): CodeEntry | null {
   return codeEntry(CHALLENGES_DIR, slug, "solution");
+}
+
+/* Plain HTML/CSS/JS challenges: solution/ files served as-is for the demo iframe */
+
+function demoFiles(slug: string) {
+  const dir = path.join(CHALLENGES_DIR, slug, "solution");
+  if (!fs.existsSync(path.join(dir, "index.html"))) return [];
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && path.extname(entry.name) in CONTENT_TYPES)
+    .map((entry) => entry.name);
+}
+
+export function getDemoFileParams() {
+  return subdirs(CHALLENGES_DIR).flatMap((slug) =>
+    demoFiles(slug).map((name) => ({ slug, file: [name] })),
+  );
+}
+
+// Only files listed in the challenge's solution/ folder are served.
+export function getDemoFile(slug: string, name: string) {
+  if (!subdirs(CHALLENGES_DIR).includes(slug)) return null;
+  if (!demoFiles(slug).includes(name)) return null;
+  return {
+    body: fs.readFileSync(path.join(CHALLENGES_DIR, slug, "solution", name)),
+    type: CONTENT_TYPES[path.extname(name)],
+  };
 }
 
 /* Tags: set in frontmatter, shared across every kind of entry */

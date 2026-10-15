@@ -408,6 +408,49 @@ pre {
   box-shadow: inset 0 3px 0 var(--brick);
 }
 
+/* Brief / Code switcher on challenge pages */
+
+.panel-tabs [role="tablist"] {
+  display: flex;
+  gap: 28px;
+  margin: 40px 0 24px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.panel-tabs [role="tab"] {
+  margin-bottom: -1px;
+  padding: 0 0 10px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.panel-tabs [role="tab"]:hover {
+  color: var(--ink);
+}
+
+.panel-tabs [role="tab"][aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--brick);
+}
+
+/* The brief's first section doesn't need a rule right under the tabs. */
+.panel-tabs .prose > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.panel-tabs .source {
+  margin-top: 0;
+}
+
 /* Challenge demo and question cards */
 
 .demo {
@@ -416,6 +459,26 @@ pre {
   min-height: 300px;
   background: var(--white);
   border: 1px solid var(--line);
+}
+
+/* Plain HTML challenges run in an iframe. */
+.demo-frame {
+  display: grid;
+  gap: 10px;
+  padding: 0 0 12px;
+}
+
+.demo-frame iframe {
+  width: 100%;
+  height: 760px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.demo-frame .nav-link {
+  justify-self: end;
+  margin-right: 16px;
+  font-size: 12px;
 }
 
 .card {

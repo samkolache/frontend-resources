@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import BackButton from "@/components/BackButton";
 import Markdown from "@/components/Markdown";
+import PanelTabs from "@/components/PanelTabs";
 import SourceFiles from "@/components/SourceFiles";
 import Tags from "@/components/Tags";
 import TitleText from "@/components/TitleText";
 import { demos } from "@/challenges/registry";
 import { getChallenge, getChallenges } from "@/lib/content";
+import { BASE_PATH } from "@/lib/site";
 
 export function generateStaticParams() {
   return getChallenges().map(({ slug }) => ({ slug }));
@@ -19,6 +21,7 @@ export default async function ChallengePage({
   if (!challenge) notFound();
 
   const Demo = demos[slug];
+  const demoSrc = `${BASE_PATH}/challenges/${slug}/demo/index.html`;
 
   return (
     <article>
@@ -28,14 +31,26 @@ export default async function ChallengePage({
         <TitleText>{challenge.title}</TitleText>
       </h1>
       <Tags tags={challenge.tags} />
-      {Demo && (
-        <section className="demo">
-          <Demo />
+      {challenge.vanilla ? (
+        <section className="demo demo-frame">
+          <iframe src={demoSrc} title={`${challenge.title} live demo`} />
+          <a href={demoSrc} target="_blank" rel="noopener" className="nav-link">
+            Open in new tab
+          </a>
         </section>
+      ) : (
+        Demo && (
+          <section className="demo">
+            <Demo />
+          </section>
+        )
       )}
-      <Markdown>{challenge.readme}</Markdown>
-      <h2>Solution</h2>
-      <SourceFiles files={challenge.files} />
+      <PanelTabs
+        panels={[
+          { label: "Brief", content: <Markdown>{challenge.readme}</Markdown> },
+          { label: "Code", content: <SourceFiles files={challenge.files} /> },
+        ]}
+      />
     </article>
   );
 }

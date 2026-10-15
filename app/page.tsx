@@ -14,10 +14,9 @@ export default function Home() {
 
   return (
     <>
-      <p className="eyebrow">Interview prep · Notes, snippets, challenges</p>
       <h1>Frontend Prep</h1>
       <p className="lede">
-        Working solutions, snippets and notes I keep for frontend interviews.
+        Working solutions, snippets, notes, and experiments.
       </p>
       <HomeBrowser entries={entries} tags={tags} />
     </>
